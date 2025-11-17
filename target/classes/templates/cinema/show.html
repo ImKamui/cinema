@@ -12,11 +12,10 @@
     <div class="container mt-4">
         <h2>Информация о фильме</h2>
 
-        <p th:if="${filmData}" th:text="${'Название:' + film.getFilmName()}">Название: неизвестно</p>
+        <p th:if="${filmData}" th:text="${'Название: ' + film.getFilmName()}">Название: неизвестно</p>
         <p th:if="${filmData}" th:text="${'Год: ' + filmData.getYear()}">Год: неизвестно</p>
         <p th:if="${filmData}" th:text="${'Описание: ' + filmData.getDescription()}">Описание: нет</p>
-        <p th:if="${filmData}" th:text="${'Рейтинг КиноПоиск: ' + filmData.getRatingKinopoisk()}">Рейтинг: нет</p>
-        <p th:if="${filmData}" th:text="${'Рейтинг IMDB: ' + filmData.getRatingImdb()}">Рейтинг IMDB: нет</p>
+        <p th:if="${filmData}" th:text="${'Рейтинг: ' + filmData.getRatingKinopoisk()}">Рейтинг: нет</p>
 
         <div th:if="${filmData != null and filmData.posterUrl != null and !filmData.posterUrl.isEmpty()}" class="mt-3">
             <h4>Постер:</h4>
