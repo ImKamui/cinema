@@ -19,15 +19,6 @@ public class Film {
 	@Column(name = "film_name")
 	private String filmName;
 	
-	@Column(name = "author")
-	private String author;
-	
-	@Column(name = "year_of_publication")
-	private String yearOfPublication;
-	
-	@Column(name = "description")
-	private String description;
-	
 	@Column(name = "file_path")
 	private String filePath;
 }

@@ -11,7 +11,7 @@
 <body>
 	<div th:each="film : ${films}" class="d-flex align-items-center mt-3">
 		<p class="mb-0"
-		th:text="${film.getFilmName()} + ', ' + ${film.getYearOfPublication()} + ', ' + ${film.getAuthor()}">
+		th:text="${film.getFilmName()}">
 		</p>
 		<a th:href="@{/films/{id}(id=${film.getId()})}" class="btn btn-primary btn-sm ms-2">Перейти к фильму</a>
 	</div>

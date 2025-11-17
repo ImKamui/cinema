@@ -27,8 +27,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import danil.cinema.CinemaApplication;
 import danil.cinema.dto.FilmDTO;
+import danil.cinema.dto.FilmRestDTO;
 import danil.cinema.models.Film;
 import danil.cinema.repositories.FilmRepository;
+import danil.cinema.services.FilmRestService;
 import danil.cinema.services.FilmService;
 
 @Controller
@@ -39,12 +41,14 @@ public class FilmController {
 
 	private final FilmRepository filmRepository;
 	private final FilmService filmService;
+	private final FilmRestService filmRestService;
 	
 	@Autowired
-	public FilmController(FilmRepository filmRepository, FilmService filmService, CinemaApplication cinemaApplication) {
+	public FilmController(FilmRepository filmRepository, FilmService filmService, CinemaApplication cinemaApplication, FilmRestService filmRestService) {
 		this.filmRepository = filmRepository;
 		this.filmService = filmService;
 		this.cinemaApplication = cinemaApplication;
+		this.filmRestService = filmRestService;
 	}
 	
 	@GetMapping()
@@ -57,7 +61,12 @@ public class FilmController {
 	@GetMapping("/{id}")
 	public String show(@PathVariable("id")int id, Model model)
 	{
-		model.addAttribute("film", filmService.findOne(id));
+		Film film = filmService.findOne(id);
+		model.addAttribute("film", film);
+		
+		FilmRestDTO filmData = filmRestService.searchMovieByTitle(film.getFilmName());
+		model.addAttribute("filmData", filmData);
+		
 		return "cinema/show";
 	}
 	
@@ -76,9 +85,6 @@ public class FilmController {
 		}
 		Film filmModel = new Film();
 		filmModel.setFilmName(film.getFilmName());
-		filmModel.setAuthor(film.getAuthor());
-		filmModel.setDescription(film.getDescription());
-		filmModel.setYearOfPublication(film.getYearOfPublication());
 		
 		if (!file.isEmpty())
 		{

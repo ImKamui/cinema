@@ -1,30 +1,41 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
           rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
           crossorigin="anonymous">
-<title>Информация о фильме</title>
+    <title>Информация о фильме</title>
 </head>
 <body>
-<div class="container mt-4">
+    <div class="container mt-4">
         <h2>Информация о фильме</h2>
-<p th:text="${'Название фильма: ' + film.getFilmName()}">VALUE</p>
-<p th:text="${'Режиссёр: ' + film.getAuthor()}">VALUE</p>
-<p th:text="${'Год выпуска: ' + film.getYearOfPublication()}">VALUE</p>
-<p th:text="${'Описание фильма: ' + film.getDescription()}">VALUE</p>
-	<div class="mt-3">
-	            <a class="btn btn-success" th:href="@{/films/{id}/play(id=${film.id})}" target="_blank">
-	                Смотреть фильм
-	            </a>
-	</div>
-	<div class="mt-3">
-		<form th:method="DELETE" th:action="@{/films/{id}(id=${film.getId()})}" style="display: inline;">
-		<input type="submit" class="btn btn-danger btn-sm" value="Удалить фильм">
-		</form>
-	</div>
-</div>
+
+        <p th:if="${filmData}" th:text="${'Название:' + film.getFilmName()}">Название: неизвестно</p>
+        <p th:if="${filmData}" th:text="${'Год: ' + filmData.getYear()}">Год: неизвестно</p>
+        <p th:if="${filmData}" th:text="${'Описание: ' + filmData.getDescription()}">Описание: нет</p>
+        <p th:if="${filmData}" th:text="${'Рейтинг КиноПоиск: ' + filmData.getRatingKinopoisk()}">Рейтинг: нет</p>
+        <p th:if="${filmData}" th:text="${'Рейтинг IMDB: ' + filmData.getRatingImdb()}">Рейтинг IMDB: нет</p>
+
+        <div th:if="${filmData != null and filmData.posterUrl != null and !filmData.posterUrl.isEmpty()}" class="mt-3">
+            <h4>Постер:</h4>
+            <img th:src="${filmData.posterUrl}" alt="Постер фильма" class="img-fluid" />
+        </div>
+        <div th:unless="${filmData != null and filmData.posterUrl != null and !filmData.posterUrl.isEmpty()}" class="mt-3">
+            <p>Постер недоступен</p>
+        </div>
+
+        <div class="mt-3">
+            <a class="btn btn-success" th:href="@{/films/{id}/play(id=${film.id})}" target="_blank">
+                Смотреть фильм
+            </a>
+        </div>
+        <div class="mt-3">
+            <form th:method="DELETE" th:action="@{/films/{id}(id=${film.getId()})}" style="display: inline;">
+                <input type="submit" class="btn btn-danger btn-sm" value="Удалить фильм">
+            </form>
+        </div>
+    </div>
 </body>
 </html>
