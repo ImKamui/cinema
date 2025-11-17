@@ -14,7 +14,7 @@ public class FilmRestDTO {
     private String nameOriginal;
     private String year;
     private String description;
-    @JsonProperty("rating")
+    @JsonProperty("ratingKinopoisk")
     private String ratingKinopoisk;
     @JsonProperty("ratingImdb")
     private String ratingImdb;
